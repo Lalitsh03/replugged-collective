@@ -128,7 +128,7 @@ p { color: var(--ink-soft); margin: 0 0 1em; }
 }
 .site-nav a:hover, .site-nav a:focus-visible { border-color: var(--yellow); }
 
-/* Don't drop the nav on phones — wrap it onto its own row under the logo so
+/* Don't drop the nav on phones. Wrap it onto its own row under the logo so
    mobile visitors still get navigation without needing a hamburger menu. */
 @media (max-width: 720px) {
   .header-inner { flex-wrap: wrap; row-gap: 8px; }
@@ -215,6 +215,24 @@ p { color: var(--ink-soft); margin: 0 0 1em; }
   50% { opacity: 0.4; }
 }
 
+/* social row tucked under the status line in the hero */
+.hero-socials {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+.hero-socials-label {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ink-soft);
+}
+.social-row-sm { margin-top: 0; gap: 10px; }
+.social-row-sm .social-link { width: 36px; height: 36px; }
+
 .hero-visual picture { display: block; }
 .hero-banner {
   width: 100%;
@@ -226,7 +244,7 @@ p { color: var(--ink-soft); margin: 0 0 1em; }
 @media (max-width: 860px) {
   .hero-grid { grid-template-columns: 1fr; gap: 28px; }
   .hero-visual { order: -1; }
-  /* the banner is 2.7:1 — scaled to full phone width every object turns into an
+  /* the banner is 2.7:1. Scaled to full phone width every object turns into an
      illegible smudge, so crop to a taller slice instead of shrinking it */
   .hero-banner {
     aspect-ratio: 2 / 1;
@@ -297,11 +315,72 @@ p { color: var(--ink-soft); margin: 0 0 1em; }
 
 /* ---------- activities ---------- */
 .activities { padding: 70px 0; }
-.activity-grid {
+
+/* Carousel. Before JS runs the track is a plain grid, so the cards are all
+   visible and readable even if the script never loads. */
+.carousel { position: relative; margin-top: 40px; }
+.carousel-viewport { overflow: hidden; }
+.carousel-track {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 26px;
-  margin-top: 40px;
+}
+.carousel.is-ready .carousel-track {
+  display: flex;
+  gap: 26px;
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+.carousel.is-ready .activity-card { min-width: 0; }
+
+.carousel-btn {
+  position: absolute;
+  top: 38%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid var(--line);
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--navy);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(27, 58, 102, 0.12);
+  transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
+}
+.carousel.is-ready .carousel-btn { display: flex; }
+.carousel-btn:hover, .carousel-btn:focus-visible {
+  background: var(--navy);
+  color: var(--yellow);
+  border-color: var(--navy);
+}
+.carousel-prev { left: -18px; }
+.carousel-next { right: -18px; }
+
+.carousel-dots {
+  display: none;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 24px;
+}
+.carousel.is-ready .carousel-dots { display: flex; }
+.carousel-dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border-radius: 50%;
+  border: 0;
+  background: var(--line);
+  cursor: pointer;
+  transition: background 0.2s ease, width 0.2s ease;
+}
+.carousel-dot.is-active { background: var(--navy); width: 22px; border-radius: 999px; }
+
+@media (max-width: 1240px) {
+  .carousel-prev { left: 4px; }
+  .carousel-next { right: 4px; }
 }
 .activity-card {
   background: #fff;
@@ -333,7 +412,7 @@ p { color: var(--ink-soft); margin: 0 0 1em; }
 }
 .activity-media.is-empty { border-bottom-style: dashed; }
 
-/* cover, not fill — the source photos are tall portrait shots in a 4:3 slot */
+/* cover, not fill. The source photos are tall portrait shots in a 4:3 slot */
 .activity-photo {
   position: absolute;
   inset: 0;
@@ -358,10 +437,12 @@ p { color: var(--ink-soft); margin: 0 0 1em; }
 .activity-media-note code { color: var(--navy); }
 
 @media (max-width: 900px) {
-  .activity-grid { grid-template-columns: repeat(2, 1fr); }
+  .carousel-track { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 560px) {
-  .activity-grid { grid-template-columns: 1fr; }
+  .carousel-track { grid-template-columns: 1fr; }
+  .carousel.is-ready .carousel-track { gap: 18px; }
+  .carousel-btn { width: 36px; height: 36px; }
 }
 
 /* ---------- join ---------- */
@@ -468,6 +549,74 @@ p { color: var(--ink-soft); margin: 0 0 1em; }
   margin: 6px 0 0;
   font-size: 0.82rem;
   color: #C0453B;
+}
+.field-hint {
+  margin: 7px 0 0;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+
+/* ---------- stats panel (signup.html?stats) ---------- */
+.stats-panel {
+  margin-top: 36px;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-dim);
+}
+.stats-row {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+.stat {
+  flex: 1;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 16px 12px;
+  text-align: center;
+}
+.stat-num {
+  display: block;
+  font-family: var(--display);
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.1;
+}
+.stat-label {
+  display: block;
+  margin-top: 4px;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+}
+.stats-caveat {
+  font-size: 0.84rem;
+  line-height: 1.55;
+  margin-bottom: 16px;
+}
+.stats-caveat strong { color: var(--ink); }
+.btn-outline-navy {
+  background: transparent;
+  color: var(--navy);
+  border: 1.5px solid var(--navy);
+  font-size: 0.86rem;
+  padding: 9px 18px;
+  cursor: pointer;
+  font-family: var(--body);
+}
+.btn-outline-navy:hover, .btn-outline-navy:focus-visible {
+  background: var(--navy);
+  color: #fff;
+}
+
+@media (max-width: 560px) {
+  .stats-row { flex-direction: column; }
 }
 
 .radio-row { display: flex; flex-wrap: wrap; gap: 8px 20px; }

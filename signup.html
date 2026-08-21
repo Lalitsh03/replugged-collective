@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Join RPC — Replugged Collective</title>
+<title>Join RPC | Replugged Collective</title>
 <link rel="icon" href="images/logo.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -34,7 +34,7 @@
 
       <p class="eyebrow">Join RPC</p>
       <h1>Get on the list.</h1>
-      <p class="signup-lead">Tell us where to reach you and what you're curious about. When the first boxes ship, you'll be first in line — and we'll aim your opening box at something you actually want to try.</p>
+      <p class="signup-lead">We're in the early days of RPC and trying to work out how much appetite there is for this. Tell us where to reach you and what you're curious about, and you'll help us find out. When the first boxes ship, you'll be first in line.</p>
 
       <form class="signup-form" id="signup-form" novalidate>
 
@@ -52,15 +52,72 @@
 
         <div class="field">
           <label for="hobby">Which hobby are you most curious about?</label>
-          <select id="hobby" name="hobby">
-            <option value="">No preference — surprise me</option>
-            <option>Fitness</option>
-            <option>Pottery</option>
+          <input type="text" id="hobby" name="hobby" list="hobby-options" autocomplete="off"
+                 placeholder="Start typing, or pick from the list">
+          <p class="field-hint">Type to search the list, or write in anything you like. If it isn't there, we still want to hear it.</p>
+          <datalist id="hobby-options">
+            <option>Archery</option>
+            <option>Baking</option>
+            <option>Basketball</option>
+            <option>Beekeeping</option>
+            <option>Birdwatching</option>
+            <option>Bouldering</option>
+            <option>Boxing</option>
+            <option>Bread making</option>
+            <option>Calligraphy</option>
+            <option>Camping</option>
+            <option>Candle making</option>
+            <option>Chess</option>
+            <option>Cocktail making</option>
+            <option>Crochet</option>
+            <option>Cycling</option>
+            <option>Dance</option>
+            <option>Drawing</option>
+            <option>Drumming</option>
+            <option>Embroidery</option>
+            <option>Fencing</option>
+            <option>Fishing</option>
+            <option>Flower arranging</option>
+            <option>Gardening</option>
+            <option>Golf</option>
+            <option>Guitar</option>
+            <option>Hiking</option>
+            <option>Ice skating</option>
+            <option>Jewelry making</option>
+            <option>Journaling</option>
+            <option>Kayaking</option>
+            <option>Knitting</option>
+            <option>Leatherwork</option>
+            <option>Linocut printing</option>
+            <option>Meditation</option>
+            <option>Model building</option>
+            <option>Origami</option>
             <option>Painting</option>
-            <option>Music</option>
-            <option>Crochet &amp; jewelry</option>
             <option>Photography</option>
-          </select>
+            <option>Piano</option>
+            <option>Pilates</option>
+            <option>Pottery</option>
+            <option>Puzzles</option>
+            <option>Quilting</option>
+            <option>Rock climbing</option>
+            <option>Rollerblading</option>
+            <option>Running</option>
+            <option>Sewing</option>
+            <option>Skateboarding</option>
+            <option>Skiing</option>
+            <option>Snowboarding</option>
+            <option>Soccer</option>
+            <option>Stargazing</option>
+            <option>Surfing</option>
+            <option>Swimming</option>
+            <option>Table tennis</option>
+            <option>Tennis</option>
+            <option>Ukulele</option>
+            <option>Volleyball</option>
+            <option>Weightlifting</option>
+            <option>Woodworking</option>
+            <option>Yoga</option>
+          </datalist>
         </div>
 
         <fieldset class="field">
@@ -72,7 +129,7 @@
           </div>
         </fieldset>
 
-        <p class="signup-note">Heads up: RPC is a class project, so this form is a prototype. Submitting it won't send your details anywhere — nothing leaves your browser.</p>
+        <p class="signup-note">We're still testing the idea, so this form doesn't transmit anything. Your answers stay on your device. Nothing leaves your browser.</p>
 
         <button type="submit" class="btn signup-submit">Join RPC</button>
       </form>
@@ -80,11 +137,32 @@
       <div class="signup-done" id="signup-done" hidden>
         <p class="eyebrow">Nice.</p>
         <h2>That's the idea, <span id="done-name">friend</span>.</h2>
-        <p>Here's what a real signup would have captured:</p>
+        <p>Here's what we picked up:</p>
         <ul class="signup-summary" id="done-summary"></ul>
-        <p class="signup-note">Because this is a class-project prototype, none of this was sent or stored — it stayed in your browser and disappears when you reload.</p>
+        <p class="signup-note">None of this was sent anywhere. It stayed in your browser, which is how we're keeping things while we gauge interest.</p>
         <a href="index.html" class="btn">Back to the site</a>
       </div>
+
+      <!-- Private counters. Hidden unless you add ?stats to the URL. -->
+      <section class="stats-panel" id="stats-panel" hidden>
+        <p class="eyebrow">Interest so far</p>
+        <div class="stats-row">
+          <div class="stat">
+            <span class="stat-num" id="stat-views">0</span>
+            <span class="stat-label">page opens</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num" id="stat-signups">0</span>
+            <span class="stat-label">details entered</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num" id="stat-rate">0%</span>
+            <span class="stat-label">conversion</span>
+          </div>
+        </div>
+        <p class="stats-caveat"><strong>This device only.</strong> These numbers come from your own browser's storage, so they count your visits and nobody else's. For real numbers across everyone who visits, you need an analytics service. See the README.</p>
+        <button type="button" class="btn btn-outline-navy" id="stats-reset">Reset counters</button>
+      </section>
 
     </div>
   </section>
@@ -99,7 +177,7 @@
       </span>
       <p>Your monthly excuse to log off 🔌</p>
     </div>
-    <p class="footer-note">Replugged Collective (RPC) — class project prototype. Not an active subscription service.</p>
+    <p class="footer-note">Replugged Collective (RPC). Early concept, not yet an active subscription service.</p>
   </div>
 </footer>
 
