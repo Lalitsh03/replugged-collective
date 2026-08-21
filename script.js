@@ -277,11 +277,19 @@
   const send = (event) => {
     const isSignup = event === 'signup';
     if (COUNTER.goatCounterCode) {
-      // plain image request, so no third-party script ever runs on the page
-      new Image().src = 'https://' + COUNTER.goatCounterCode + '.goatcounter.com/count'
-        + '?p=' + encodeURIComponent(isSignup ? '/signup-completed' : location.pathname)
-        + '&t=' + encodeURIComponent(isSignup ? 'Signup completed' : document.title)
-        + '&r=' + encodeURIComponent(document.referrer || '');
+      // GoatCounter's /count endpoint returns a 1x1 gif, so this counts without
+      // ever running a third-party script on the page.
+      //   e=1  files signups under Events instead of mixing them in with pages
+      //   rnd  stops the browser serving a cached pixel instead of asking again
+      const params = new URLSearchParams({
+        p: isSignup ? 'signup-completed' : location.pathname,
+        t: isSignup ? 'Signup completed' : document.title,
+        r: document.referrer || '',
+        rnd: String(Math.random()).slice(2)
+      });
+      if (isSignup) params.set('e', '1');
+      new Image().src = 'https://' + COUNTER.goatCounterCode
+        + '.goatcounter.com/count?' + params.toString();
     }
     if (COUNTER.endpoint) {
       try {

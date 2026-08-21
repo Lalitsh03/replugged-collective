@@ -83,12 +83,21 @@ count your own browser only**, because they live in `localStorage`.
 To count everyone, you need something outside GitHub Pages, because static hosting
 serves files but can't receive them. The setup takes about two minutes:
 
-1. Sign up free at [goatcounter.com](https://www.goatcounter.com) and pick a code,
-   say `replugged`. Your dashboard becomes `replugged.goatcounter.com`.
-2. Open `script.js`, find the `COUNTER` block, and set
-   `goatCounterCode: 'replugged'`.
-3. Push. Your dashboard now shows page opens, and every completed signup lands as
-   a hit on `/signup-completed`. That number is your signup count.
+1. Sign up at [goatcounter.com/signup](https://www.goatcounter.com/signup). The
+   "code" you choose becomes your subdomain, so `replugged` gives you a dashboard
+   at `replugged.goatcounter.com`. Free for normal traffic, no cookies, and no
+   GDPR banner needed.
+2. Open `script.js`, find the `COUNTER` block near the top of the counters
+   section, and set `goatCounterCode: 'replugged'`.
+3. Commit and push, wait a minute or two for Pages to rebuild.
+
+Page opens then show under **Pages** in the dashboard, and completed signups show
+under **Events** as `signup-completed`. That second number is your signup count.
+
+Nothing is added to the page markup: the code requests GoatCounter's 1x1 GIF
+directly, so no third-party JavaScript ever runs on the site. Note that ad
+blockers will stop some of these requests, so treat the number as a solid floor
+rather than an exact count.
 
 **It only ever sends a tally.** The name, email and hobby are read off the form,
 shown back on screen, and dropped. They are never included in what goes out. That
