@@ -51,10 +51,25 @@ counts it, and adds a dot for it. No JavaScript to touch.
 
 **If the photo isn't there yet,** the card shows a hatched placeholder printing the
 exact filename it's waiting for. Drop that file in later and the card fills itself
-in. That's why the six current cards look the way they do.
+in. Pottery and jet skiing have real photos; the other five are still waiting.
 
-**Two photos are already in the repo** but not on any card: `activity-kayaking.jpg`
-and `activity-jetskiing.jpg`. Use the snippet above to add them whenever you want.
+**One spare photo is in the repo** but not on a card yet: `activity-kayaking.jpg`.
+Use the snippet above to add it whenever you want.
+
+### If the subject sits off-centre
+
+Slots crop from the middle, which is unkind to tall phone photos where the subject
+sits near the bottom. Add an `object-position` to that one image to slide the crop:
+
+```html
+<img class="activity-photo" src="images/activity-jetskiing.jpg"
+     style="object-position: center 69%" ...>
+```
+
+`50%` is the default middle and higher numbers move the visible window down. The
+jet skiing card uses `69%` so the skis land in frame rather than being cut off at
+the bottom, and so the black letterbox bars baked into the screenshot stay out of
+shot.
 
 ## Adding real social links
 
