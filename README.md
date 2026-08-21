@@ -58,36 +58,54 @@ and `activity-jetskiing.jpg`. Use the snippet above to add them whenever you wan
 
 ## Adding real social links
 
-Both social rows (one in the hero, one near the bottom of `index.html`) point at
-`href="#"`. Search for `social-link` and replace the `#` with the real URLs. There
-are two copies of each icon, so change both.
+Reddit is wired up to https://www.reddit.com/r/RepluggedCollective/. The other four
+still point at `href="#"`. Search for `social-link` and replace the `#` with the
+real URLs. There are **two rows** (one in the hero, one near the bottom of
+`index.html`), so change both copies.
 
-## Tracking interest
+Each icon carries its own brand colour. Instagram uses a gradient defined once in
+the hidden `<svg>` at the top of `index.html`, which is why its `fill` is
+`url(#ig-gradient)` rather than `currentColor`.
 
-Add `?stats` to the signup URL to see the counters:
+## Counting how many people sign up
+
+Add `?stats` to the signup URL:
 
 ```
 https://lalitsh03.github.io/replugged-collective/signup.html?stats
 ```
 
-You get page opens, details entered, and a conversion rate.
+You get page opens, details entered, and a conversion rate. Out of the box **these
+count your own browser only**, because they live in `localStorage`.
 
-**These numbers are from your own browser only.** They live in `localStorage`, so
-they count your visits on your device and nobody else's. That is a deliberate
-trade: it lets the site honestly tell visitors that nothing they type is
-transmitted anywhere.
+### Getting real numbers
 
-**To count everyone who visits,** you need something outside GitHub Pages, because
-static hosting can serve files but can't receive them. Options, easiest first:
+To count everyone, you need something outside GitHub Pages, because static hosting
+serves files but can't receive them. The setup takes about two minutes:
 
-- **GoatCounter or Plausible** for page views. Free tiers, one script tag.
-- **Formspree, FormSubmit or a Google Form** for the actual signups, which also
-  gets you the email addresses rather than just a count.
+1. Sign up free at [goatcounter.com](https://www.goatcounter.com) and pick a code,
+   say `replugged`. Your dashboard becomes `replugged.goatcounter.com`.
+2. Open `script.js`, find the `COUNTER` block, and set
+   `goatCounterCode: 'replugged'`.
+3. Push. Your dashboard now shows page opens, and every completed signup lands as
+   a hit on `/signup-completed`. That number is your signup count.
 
-Then open `script.js`, find `ANALYTICS_ENDPOINT`, and set it. One important catch:
-the moment data starts leaving the browser, the copy on `index.html` and
-`signup.html` promising that it doesn't becomes untrue. Change that wording at the
-same time. There's a warning comment sitting right above the setting.
+**It only ever sends a tally.** The name, email and hobby are read off the form,
+shown back on screen, and dropped. They are never included in what goes out. That
+is why this can stay switched on without breaking the promise made to visitors.
+
+If you would rather use your own backend, set `endpoint` in the same block instead.
+It receives `{event, at}` and nothing else.
+
+If you want the actual email addresses rather than just a count, that's a different
+job: use Formspree, FormSubmit or a Google Form, and see the section below.
+
+### The wording takes care of itself
+
+The privacy lines on both pages are driven by whether counting is switched on. With
+it off they say nothing is transmitted; with it on they say only the signup is
+counted. Search for `data-note-local` to see both versions. This exists so the site
+can't end up promising one thing while doing another.
 
 ## The signup form
 
@@ -96,9 +114,15 @@ reason as above. On submit it shows what it captured and says plainly that nothi
 was sent. To make it real, give the `<form>` an `action` and `method` pointing at
 your endpoint and delete the submit handler in `script.js`.
 
-The hobby field is a free-text input backed by a list of 61 suggestions. Visitors
-can type to search it or write in anything that isn't on it. To change the
-suggestions, edit the `<datalist id="hobby-options">` block.
+The hobby field is a free-text input backed by a list of 61 suggestions. It shows
+five at a time and scrolls for the rest. Visitors can type to search it, arrow
+through it, or ignore it entirely and write in anything.
+
+To change the suggestions, edit the `<datalist id="hobby-options">` block in
+`signup.html`. That list is the single source of truth: `script.js` reads it and
+builds the scrollable dropdown from it, and if the script never runs the browser's
+own datalist takes over. To show a different number of rows, change the `5` in the
+`max-height` on `.combo-list` in `styles.css`.
 
 ## Editing anything else
 

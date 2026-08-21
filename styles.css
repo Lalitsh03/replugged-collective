@@ -215,13 +215,13 @@ p { color: var(--ink-soft); margin: 0 0 1em; }
   50% { opacity: 0.4; }
 }
 
-/* social row tucked under the status line in the hero */
+/* social row tucked under the status line in the hero, label stacked above */
 .hero-socials {
   display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-top: 18px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 20px;
 }
 .hero-socials-label {
   font-family: var(--mono);
@@ -230,8 +230,8 @@ p { color: var(--ink-soft); margin: 0 0 1em; }
   letter-spacing: 0.12em;
   color: var(--ink-soft);
 }
-.social-row-sm { margin-top: 0; gap: 10px; }
-.social-row-sm .social-link { width: 36px; height: 36px; }
+.social-row-sm { margin-top: 0; gap: 10px; justify-content: flex-start; }
+.social-row-sm .social-link { width: 38px; height: 38px; }
 
 .hero-visual picture { display: block; }
 .hero-banner {
@@ -497,13 +497,26 @@ p { color: var(--ink-soft); margin: 0 0 1em; }
   display: flex; align-items: center; justify-content: center;
   color: var(--navy);
   text-decoration: none;
-  transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
+  background: #fff;
+  transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
 }
+
+/* Each mark carries its own brand colour. Instagram is a gradient, defined once
+   in the hidden <svg> sprite at the top of index.html. */
+.social-facebook  { color: #1877F2; }
+.social-tiktok    { color: #010101; }
+.social-reddit    { color: #FF4500; }
+.social-x         { color: #000000; }
+.social-instagram { color: #DD2A7B; }
+
+/* on hover the circle fills with the brand colour and the mark goes white */
 .social-link:hover, .social-link:focus-visible {
-  background: var(--navy);
-  color: var(--yellow);
+  background: currentColor;
+  border-color: currentColor;
   transform: translateY(-2px);
 }
+.social-link:hover svg path,
+.social-link:focus-visible svg path { fill: #fff; }
 
 /* ---------- signup page ---------- */
 .signup { padding: 56px 0 72px; }
@@ -555,6 +568,47 @@ p { color: var(--ink-soft); margin: 0 0 1em; }
   font-size: 0.82rem;
   line-height: 1.45;
   color: var(--ink-soft);
+}
+
+/* ---------- hobby combobox ---------- */
+.combo { position: relative; }
+.combo-list {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  right: 0;
+  z-index: 30;
+  margin: 0;
+  padding: 4px;
+  list-style: none;
+  background: var(--paper);
+  border: 1.5px solid var(--line);
+  border-radius: 10px;
+  box-shadow: 0 12px 28px rgba(27, 58, 102, 0.15);
+  /* exactly five 40px rows, then it scrolls */
+  max-height: calc(5 * 40px + 8px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.combo-option {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  border-radius: 7px;
+  font-size: 0.95rem;
+  color: var(--ink);
+  cursor: pointer;
+}
+.combo-option:hover,
+.combo-option.is-active { background: var(--paper-dim); }
+
+/* keep the scrollbar from looking like a system afterthought */
+.combo-list::-webkit-scrollbar { width: 10px; }
+.combo-list::-webkit-scrollbar-thumb {
+  background: var(--line);
+  border-radius: 999px;
+  border: 3px solid var(--paper);
 }
 
 /* ---------- stats panel (signup.html?stats) ---------- */

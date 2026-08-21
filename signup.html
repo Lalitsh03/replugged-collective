@@ -52,8 +52,11 @@
 
         <div class="field">
           <label for="hobby">Which hobby are you most curious about?</label>
-          <input type="text" id="hobby" name="hobby" list="hobby-options" autocomplete="off"
-                 placeholder="Start typing, or pick from the list">
+          <div class="combo" data-combo>
+            <input type="text" id="hobby" name="hobby" list="hobby-options" autocomplete="off"
+                   placeholder="Start typing, or pick from the list">
+            <!-- script.js swaps the native datalist for a scrollable listbox here -->
+          </div>
           <p class="field-hint">Type to search the list, or write in anything you like. If it isn't there, we still want to hear it.</p>
           <datalist id="hobby-options">
             <option>Archery</option>
@@ -129,7 +132,9 @@
           </div>
         </fieldset>
 
-        <p class="signup-note">We're still testing the idea, so this form doesn't transmit anything. Your answers stay on your device. Nothing leaves your browser.</p>
+        <p class="signup-note"
+           data-note-local="We're still testing the idea, so this form doesn't transmit anything. Your answers stay on your device. Nothing leaves your browser."
+           data-note-counted="We count that someone signed up, and nothing else. Your name and email stay on your device and are never sent anywhere.">We're still testing the idea, so this form doesn't transmit anything. Your answers stay on your device. Nothing leaves your browser.</p>
 
         <button type="submit" class="btn signup-submit">Join RPC</button>
       </form>
@@ -139,7 +144,9 @@
         <h2>That's the idea, <span id="done-name">friend</span>.</h2>
         <p>Here's what we picked up:</p>
         <ul class="signup-summary" id="done-summary"></ul>
-        <p class="signup-note">None of this was sent anywhere. It stayed in your browser, which is how we're keeping things while we gauge interest.</p>
+        <p class="signup-note"
+           data-note-local="None of this was sent anywhere. It stayed in your browser, which is how we're keeping things while we gauge interest."
+           data-note-counted="All we recorded is that one more person signed up. Your name and email never left your browser.">None of this was sent anywhere. It stayed in your browser, which is how we're keeping things while we gauge interest.</p>
         <a href="index.html" class="btn">Back to the site</a>
       </div>
 
@@ -160,7 +167,7 @@
             <span class="stat-label">conversion</span>
           </div>
         </div>
-        <p class="stats-caveat"><strong>This device only.</strong> These numbers come from your own browser's storage, so they count your visits and nobody else's. For real numbers across everyone who visits, you need an analytics service. See the README.</p>
+        <p class="stats-caveat"><strong>This device only.</strong> These numbers come from your own browser's storage, so they count your visits and nobody else's. To count everyone, set <code>goatCounterCode</code> in <code>script.js</code>. See the README.</p>
         <button type="button" class="btn btn-outline-navy" id="stats-reset">Reset counters</button>
       </section>
 

@@ -143,18 +143,129 @@
 })();
 
 
-// Interest counters. Everything here is local to the visitor's own browser, so
-// the page can honestly promise that nothing is transmitted. Add ?stats to a URL
-// to see the readout.
+// Hobby combobox. A native <datalist> gives no control over how many rows show,
+// so this swaps it for a listbox capped at five visible options that scrolls for
+// the rest. Still just a text input underneath, so anything can be typed in.
+// If this never runs, the datalist in the markup keeps working on its own.
+(function () {
+  const wrap = document.querySelector('[data-combo]');
+  if (!wrap) return;
+  const input = wrap.querySelector('input');
+  const source = input && document.getElementById(input.getAttribute('list'));
+  if (!input || !source) return;
+
+  const all = Array.from(source.options).map(o => o.value);
+  input.removeAttribute('list');   // otherwise the native dropdown doubles up
+
+  const list = document.createElement('ul');
+  list.className = 'combo-list';
+  list.id = 'hobby-listbox';
+  list.setAttribute('role', 'listbox');
+  list.hidden = true;
+  wrap.appendChild(list);
+
+  input.setAttribute('role', 'combobox');
+  input.setAttribute('aria-controls', list.id);
+  input.setAttribute('aria-autocomplete', 'list');
+  input.setAttribute('aria-expanded', 'false');
+
+  let items = [];
+  let active = -1;
+
+  const close = () => {
+    list.hidden = true;
+    input.setAttribute('aria-expanded', 'false');
+    input.removeAttribute('aria-activedescendant');
+    active = -1;
+  };
+
+  const setActive = (i) => {
+    items.forEach(li => li.classList.remove('is-active'));
+    active = i;
+    if (i < 0 || !items[i]) {
+      input.removeAttribute('aria-activedescendant');
+      return;
+    }
+    items[i].classList.add('is-active');
+    input.setAttribute('aria-activedescendant', items[i].id);
+    items[i].scrollIntoView({ block: 'nearest' });
+  };
+
+  const choose = (value) => {
+    input.value = value;
+    close();
+    input.focus();
+  };
+
+  const open = (filter) => {
+    const q = (filter || '').trim().toLowerCase();
+    const matches = q ? all.filter(v => v.toLowerCase().includes(q)) : all;
+    list.textContent = '';
+    if (matches.length === 0) { close(); return; }
+    matches.forEach((value, i) => {
+      const li = document.createElement('li');
+      li.id = 'hobby-opt-' + i;
+      li.className = 'combo-option';
+      li.setAttribute('role', 'option');
+      li.textContent = value;
+      // mousedown, not click: fires before blur closes the list
+      li.addEventListener('mousedown', (e) => { e.preventDefault(); choose(value); });
+      list.appendChild(li);
+    });
+    items = Array.from(list.children);
+    list.hidden = false;
+    list.scrollTop = 0;
+    input.setAttribute('aria-expanded', 'true');
+    setActive(-1);
+  };
+
+  input.addEventListener('input', () => open(input.value));
+  input.addEventListener('focus', () => open(input.value));
+  input.addEventListener('blur', () => setTimeout(close, 120));
+
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (list.hidden) { open(input.value); setActive(0); }
+      else setActive(active + 1 >= items.length ? 0 : active + 1);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (!list.hidden) setActive(active - 1 < 0 ? items.length - 1 : active - 1);
+    } else if (e.key === 'Enter') {
+      if (!list.hidden && active >= 0) { e.preventDefault(); choose(items[active].textContent); }
+    } else if (e.key === 'Escape') {
+      close();
+    }
+  });
+})();
+
+
+// Interest counters.
+//
+// Two layers. The local layer always runs and counts this browser only, which is
+// what you see at ?stats. The remote layer is off until you configure it below,
+// and even then it sends nothing but a tally: the fact that a signup happened,
+// never the name or the email. Those are read straight off the form and dropped.
+//
+// The wording on the page is driven by whether the remote layer is on (see the
+// data-note-* attributes), so the site cannot end up claiming it sends nothing
+// while quietly sending something.
 (function () {
   const KEY_VIEWS = 'rpc:views';
   const KEY_SIGNUPS = 'rpc:signups';
 
-  // Point this at a real endpoint to collect numbers across everyone who visits.
-  // WARNING: the moment this is not null, data DOES leave the visitor's browser,
-  // and the copy on index.html and signup.html promising otherwise becomes false.
-  // Update that copy at the same time. See the README.
-  const ANALYTICS_ENDPOINT = null;
+  const COUNTER = {
+    // Easiest route to real numbers. Sign up free at goatcounter.com, then put
+    // your site code here (the part before .goatcounter.com). Counts page opens
+    // and completed signups, no cookies and no script tag.
+    goatCounterCode: null,      // e.g. 'replugged'
+
+    // Or point this at any URL that accepts a POST. The body is {event, at}
+    // and nothing else.
+    endpoint: null
+  };
+
+  const remoteOn = () => Boolean(COUNTER.goatCounterCode || COUNTER.endpoint);
 
   const read = (key) => {
     try { return parseInt(localStorage.getItem(key), 10) || 0; } catch (e) { return 0; }
@@ -162,12 +273,27 @@
   const bump = (key) => {
     try { localStorage.setItem(key, read(key) + 1); } catch (e) { /* private mode */ }
   };
+
   const send = (event) => {
-    if (!ANALYTICS_ENDPOINT) return;
-    try {
-      navigator.sendBeacon(ANALYTICS_ENDPOINT, JSON.stringify({ event: event, at: Date.now() }));
-    } catch (e) { /* never let analytics break the page */ }
+    const isSignup = event === 'signup';
+    if (COUNTER.goatCounterCode) {
+      // plain image request, so no third-party script ever runs on the page
+      new Image().src = 'https://' + COUNTER.goatCounterCode + '.goatcounter.com/count'
+        + '?p=' + encodeURIComponent(isSignup ? '/signup-completed' : location.pathname)
+        + '&t=' + encodeURIComponent(isSignup ? 'Signup completed' : document.title)
+        + '&r=' + encodeURIComponent(document.referrer || '');
+    }
+    if (COUNTER.endpoint) {
+      try {
+        navigator.sendBeacon(COUNTER.endpoint, JSON.stringify({ event: event, at: Date.now() }));
+      } catch (e) { /* never let counting break the page */ }
+    }
   };
+
+  // keep the privacy wording matched to what actually happens
+  document.querySelectorAll('[data-note-local]').forEach(el => {
+    el.textContent = remoteOn() ? el.dataset.noteCounted : el.dataset.noteLocal;
+  });
 
   const panel = document.getElementById('stats-panel');
   const render = () => {
