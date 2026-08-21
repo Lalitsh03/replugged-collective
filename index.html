@@ -15,15 +15,15 @@
 
 <header class="site-header">
   <div class="wrap header-inner">
-    <a href="#top" class="brand">
-      <img src="images/logo.jpg" alt="Replugged Collective logo" class="brand-mark">
+    <a href="#top" class="brand logo-crop">
+      <img src="images/logo.jpg" alt="Replugged Collective logo">
     </a>
     <nav class="site-nav">
       <a href="#how">How it works</a>
       <a href="#activities">Activities</a>
       <a href="#socials">Follow</a>
     </nav>
-    <a href="#join" class="btn btn-small">Join RPC</a>
+    <a href="signup.html" class="btn btn-small">Join RPC</a>
   </div>
 </header>
 
@@ -45,13 +45,18 @@
           </span></h1>
         <p class="hero-sub">Every month, a curated box shows up with everything you need to try a new hands-on hobby — pottery, painting, music, fitness, and more. No screens required. Just you, your hands, and something real.</p>
         <div class="hero-actions">
-          <a href="#join" class="btn">Start your subscription</a>
+          <a href="signup.html" class="btn">Start your subscription</a>
           <a href="#how" class="btn btn-ghost">See how it works</a>
         </div>
         <p class="status-line"><span class="status-dot"></span> <span id="status-text">signal: offline</span></p>
       </div>
       <div class="hero-visual">
-        <img src="images/banner.jpeg" alt="Illustrated collection of hobby tools: boxing gloves, pottery, painting, music, plants, and craft supplies" class="hero-banner">
+        <picture>
+          <!-- phones get a 114KB copy instead of the 646KB desktop original -->
+          <source media="(max-width: 860px)" srcset="images/banner-mobile.jpg">
+          <img src="images/banner.jpg" width="3390" height="1248" class="hero-banner"
+               alt="Illustrated collection of hobby tools: boxing gloves, pottery, painting, music, plants, and craft supplies">
+        </picture>
       </div>
     </div>
   </section>
@@ -109,48 +114,60 @@
       <div class="activity-grid">
 
         <article class="activity-card">
-          <div class="activity-img-placeholder" data-file="images/activity-fitness.jpg">
-            <span>Replace image:<br><code>activity-fitness.jpg</code></span>
+          <div class="activity-media">
+            <img class="activity-photo" src="images/activity-fitness.jpg" loading="lazy"
+                 alt="Kettlebells, a jump rope and boxing basics laid out for a month of training">
+            <span class="activity-media-note">Add image:<br><code>activity-fitness.jpg</code></span>
           </div>
           <h3>Fitness</h3>
           <p>Kettlebells, jump rope, and boxing basics for a month of building strength off-screen.</p>
         </article>
 
         <article class="activity-card">
-          <div class="activity-img-placeholder" data-file="images/activity-pottery.jpg">
-            <span>Replace image:<br><code>activity-pottery.jpg</code></span>
+          <div class="activity-media">
+            <img class="activity-photo" src="images/activity-pottery.jpg" loading="lazy"
+                 alt="A hand-thrown ceramic bowl resting on a glazed tile">
+            <span class="activity-media-note">Add image:<br><code>activity-pottery.jpg</code></span>
           </div>
           <h3>Pottery</h3>
           <p>Clay, a wheel guide, and glazes — shape something with your hands, start to finish.</p>
         </article>
 
         <article class="activity-card">
-          <div class="activity-img-placeholder" data-file="images/activity-painting.jpg">
-            <span>Replace image:<br><code>activity-painting.jpg</code></span>
+          <div class="activity-media">
+            <img class="activity-photo" src="images/activity-painting.jpg" loading="lazy"
+                 alt="A canvas, palette and brushes set up for a first painting">
+            <span class="activity-media-note">Add image:<br><code>activity-painting.jpg</code></span>
           </div>
           <h3>Painting</h3>
           <p>Canvas, palette, and brushes for anyone who's never picked one up before.</p>
         </article>
 
         <article class="activity-card">
-          <div class="activity-img-placeholder" data-file="images/activity-music.jpg">
-            <span>Replace image:<br><code>activity-music.jpg</code></span>
+          <div class="activity-media">
+            <img class="activity-photo" src="images/activity-music.jpg" loading="lazy"
+                 alt="An acoustic guitar and a beginner's songbook">
+            <span class="activity-media-note">Add image:<br><code>activity-music.jpg</code></span>
           </div>
           <h3>Music</h3>
           <p>A beginner's path into guitar — chords, a songbook, and no audience required.</p>
         </article>
 
         <article class="activity-card">
-          <div class="activity-img-placeholder" data-file="images/activity-crochet.jpg">
-            <span>Replace image:<br><code>activity-crochet.jpg</code></span>
+          <div class="activity-media">
+            <img class="activity-photo" src="images/activity-crochet.jpg" loading="lazy"
+                 alt="Yarn, beads and cord for crochet and jewellery making">
+            <span class="activity-media-note">Add image:<br><code>activity-crochet.jpg</code></span>
           </div>
           <h3>Crochet &amp; jewelry</h3>
           <p>Yarn, beads, and cord for slow, repetitive, genuinely calming handwork.</p>
         </article>
 
         <article class="activity-card">
-          <div class="activity-img-placeholder" data-file="images/activity-photography.jpg">
-            <span>Replace image:<br><code>activity-photography.jpg</code></span>
+          <div class="activity-media">
+            <img class="activity-photo" src="images/activity-photography.jpg" loading="lazy"
+                 alt="A simple film camera with a roll of film">
+            <span class="activity-media-note">Add image:<br><code>activity-photography.jpg</code></span>
           </div>
           <h3>Photography</h3>
           <p>A simple film camera and a reason to actually look at what's in front of you.</p>
@@ -165,7 +182,10 @@
       <p class="eyebrow">Ready?</p>
       <h2>Your next hobby is one box away.</h2>
       <p class="join-sub">This page is part of a class project — subscriptions aren't live yet. Consider this your preview of Replugged Collective.</p>
-      <a href="#top" class="btn">Notify me at launch</a>
+      <div class="join-actions">
+        <a href="signup.html" class="btn">Join RPC</a>
+        <a href="signup.html#email" class="btn btn-outline">Notify me at launch</a>
+      </div>
     </div>
   </section>
 
@@ -197,7 +217,9 @@
 <footer class="site-footer">
   <div class="wrap footer-inner">
     <div class="footer-brand">
-      <img src="images/logo.jpg" alt="Replugged Collective logo" class="footer-mark">
+      <span class="footer-mark logo-crop">
+        <img src="images/logo.jpg" alt="Replugged Collective logo">
+      </span>
       <p>Your monthly excuse to log off 🔌</p>
     </div>
     <p class="footer-note">Replugged Collective (RPC) — class project prototype. Not an active subscription service.</p>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Join RPC — Replugged Collective</title>
+<link rel="icon" href="images/logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="cord-line" aria-hidden="true"></div>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a href="index.html" class="brand logo-crop">
+      <img src="images/logo.jpg" alt="Replugged Collective logo">
+    </a>
+    <nav class="site-nav">
+      <a href="index.html#how">How it works</a>
+      <a href="index.html#activities">Activities</a>
+      <a href="index.html#socials">Follow</a>
+    </nav>
+    <a href="index.html" class="btn btn-small btn-ghost">Back to site</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="signup">
+    <div class="wrap signup-inner">
+
+      <p class="eyebrow">Join RPC</p>
+      <h1>Get on the list.</h1>
+      <p class="signup-lead">Tell us where to reach you and what you're curious about. When the first boxes ship, you'll be first in line — and we'll aim your opening box at something you actually want to try.</p>
+
+      <form class="signup-form" id="signup-form" novalidate>
+
+        <div class="field">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" autocomplete="name" required>
+          <p class="field-error" data-error-for="name" hidden>Please enter your name.</p>
+        </div>
+
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" autocomplete="email" required>
+          <p class="field-error" data-error-for="email" hidden>Please enter a valid email address.</p>
+        </div>
+
+        <div class="field">
+          <label for="hobby">Which hobby are you most curious about?</label>
+          <select id="hobby" name="hobby">
+            <option value="">No preference — surprise me</option>
+            <option>Fitness</option>
+            <option>Pottery</option>
+            <option>Painting</option>
+            <option>Music</option>
+            <option>Crochet &amp; jewelry</option>
+            <option>Photography</option>
+          </select>
+        </div>
+
+        <fieldset class="field">
+          <legend>How often would you want a box?</legend>
+          <div class="radio-row">
+            <label class="radio"><input type="radio" name="cadence" value="monthly" checked> Monthly</label>
+            <label class="radio"><input type="radio" name="cadence" value="every-other-month"> Every other month</label>
+            <label class="radio"><input type="radio" name="cadence" value="quarterly"> Quarterly</label>
+          </div>
+        </fieldset>
+
+        <p class="signup-note">Heads up: RPC is a class project, so this form is a prototype. Submitting it won't send your details anywhere — nothing leaves your browser.</p>
+
+        <button type="submit" class="btn signup-submit">Join RPC</button>
+      </form>
+
+      <div class="signup-done" id="signup-done" hidden>
+        <p class="eyebrow">Nice.</p>
+        <h2>That's the idea, <span id="done-name">friend</span>.</h2>
+        <p>Here's what a real signup would have captured:</p>
+        <ul class="signup-summary" id="done-summary"></ul>
+        <p class="signup-note">Because this is a class-project prototype, none of this was sent or stored — it stayed in your browser and disappears when you reload.</p>
+        <a href="index.html" class="btn">Back to the site</a>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <div class="footer-brand">
+      <span class="footer-mark logo-crop">
+        <img src="images/logo.jpg" alt="Replugged Collective logo">
+      </span>
+      <p>Your monthly excuse to log off 🔌</p>
+    </div>
+    <p class="footer-note">Replugged Collective (RPC) — class project prototype. Not an active subscription service.</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

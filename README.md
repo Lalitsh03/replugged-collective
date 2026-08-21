@@ -1,24 +1,42 @@
-# Replugged Collective — GitHub Pages site
+# Replugged Collective 🔌
 
-## Deploy
-1. Create a new GitHub repo (e.g. `replugged-collective`).
-2. Push these files to the repo root (index.html, styles.css, script.js, images/).
-3. Repo Settings → Pages → Source: "Deploy from a branch" → branch `main`, folder `/ (root)`.
-4. Your site goes live at `https://<username>.github.io/<repo-name>/`.
+> Your monthly excuse to log off.
 
-## Swap in real photos
-Six dashed placeholder boxes in the Activities section show the exact filename each one expects:
-- images/activity-fitness.jpg
-- images/activity-pottery.jpg
-- images/activity-painting.jpg
-- images/activity-music.jpg
-- images/activity-crochet.jpg
-- images/activity-photography.jpg
+RPC is a monthly hobby subscription. A box turns up, you put the phone in the other
+room, and you make something with your hands — pottery, painting, music, fitness,
+whatever's next in the rotation.
 
-Drop matching files into the `images/` folder with those exact names and they'll render automatically — no code changes needed.
+This repo is the website for it. Class project, built from scratch: plain HTML, CSS
+and JavaScript. No frameworks, no build step, no npm install.
 
-## What's placeholder vs real
-- Logo and banner: real, from your uploads.
-- Activity photos: placeholder (dashed boxes), waiting on your images.
-- Social links: point to `#`, wire up real URLs in index.html (search for `social-link`).
-- About/how-it-works copy: written for this project, edit freely in index.html.
+**Live:** https://lalitsh03.github.io/replugged-collective/
+
+## What's in here
+
+```
+index.html    the landing page
+signup.html   the Join RPC form
+styles.css    all the styling
+script.js     the small interactive bits
+images/       logo, banner, activity photos
+```
+
+## Two things worth knowing
+
+**Adding activity photos.** The six activity cards each look for a file in
+`images/` — and until it's there, the card shows you the exact filename it wants
+(`activity-fitness.jpg`, `activity-painting.jpg`, and so on). Drop a correctly
+named file in and the card fills itself in. No code to touch.
+
+Landscape photos work best, and keep filenames lowercase — GitHub serves this from
+Linux, which cares about capital letters even when your laptop doesn't.
+
+**The signup form doesn't actually sign anyone up.** GitHub Pages can serve files
+but can't receive them, so there's nowhere for a submission to go. The form checks
+what you typed and then says plainly that nothing was sent — better than pretending
+it worked and quietly binning real signups. Pointing it at a Google Form or a
+Formspree endpoint is a small change to `signup.html` whenever we want it to be real.
+
+---
+
+Built for a class. Not an actual subscription service — please don't send us money.
