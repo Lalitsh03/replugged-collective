@@ -71,12 +71,21 @@ jet skiing card uses `69%` so the skis land in frame rather than being cut off a
 the bottom, and so the black letterbox bars baked into the screenshot stay out of
 shot.
 
-## Adding real social links
+## Social links
 
-Reddit is wired up to https://www.reddit.com/r/RepluggedCollective/. The other four
-still point at `href="#"`. Search for `social-link` and replace the `#` with the
-real URLs. There are **two rows** (one in the hero, one near the bottom of
-`index.html`), so change both copies.
+All five are live and open in a new tab:
+
+| Platform | URL |
+|---|---|
+| Facebook | https://www.facebook.com/profile.php?id=61593046847820 |
+| TikTok | https://www.tiktok.com/@repluggedcollecti |
+| Reddit | https://www.reddit.com/r/RepluggedCollective/ |
+| Instagram | https://www.instagram.com/repluggedcollective/ |
+| X | https://x.com/RepluggedCo |
+
+They appear in **two rows**, one in the hero and one near the bottom of
+`index.html`, so any URL change has to be made in both places. Search for
+`social-link` to find them.
 
 Each icon carries its own brand colour. Instagram uses a gradient defined once in
 the hidden `<svg>` at the top of `index.html`, which is why its `fill` is
