@@ -258,7 +258,7 @@
     // Easiest route to real numbers. Sign up free at goatcounter.com, then put
     // your site code here (the part before .goatcounter.com). Counts page opens
     // and completed signups, no cookies and no script tag.
-    goatCounterCode: null,      // e.g. 'replugged'
+    goatCounterCode: 'replugged',   // replugged.goatcounter.com
 
     // Or point this at any URL that accepts a POST. The body is {event, at}
     // and nothing else.
